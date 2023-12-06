@@ -1,4 +1,4 @@
-import tasks.day03.Task05
+import tasks.day03.Task06
 import java.io.File
 
 fun Array<String>.main() {
@@ -12,7 +12,7 @@ private fun doTask(): Float {
         .readLines()
         .map { it }
 
-    val task = Task05(inputData)
+    val task = Task06(inputData)
     return task.executeTask()
 }
 
@@ -25,6 +25,8 @@ inline fun runBenchmark(repeatCount: Int = 50, task: () -> Float) {
     repeat(repeatCount) {
         times.add(task())
     }
+    times.remove(times.max())
+    times.remove(times.min())
     println("----------------")
     println("Result of the benchmark is:")
     println("Task was completed $repeatCount times and in average it took ${times.average()} ms")
