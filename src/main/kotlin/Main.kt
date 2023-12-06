@@ -1,4 +1,3 @@
-import tasks.day03.Task05
 import tasks.day03.Task06
 import java.io.File
 
@@ -13,7 +12,7 @@ private fun doTask(): Float {
         .readLines()
         .map { it }
 
-    val task = Task05(inputData)
+    val task = Task06(inputData)
     return task.executeTask()
 }
 
