@@ -10,15 +10,8 @@ Advent of Code is an annual coding event that takes place during the month of De
 
 The repository is organized as follows:
 - `tasks/`: Each day's challenge is in its own folder, labeled `dayXX` (replace `XX` with the day number).
-    - `Task(X)/`: Solution and code for part 1 of the challenge.
-    - `Task(X+1)/`: Solution and code for part 2 of the challenge.
-    - `task_input/`: Input provided for the challenge.
-    - `task_input_test/`: Short testing input provided for the challenge.
-- `Main.kt`: Main class, contains code for executing the tasks and benchmark for measuring the speed of the algorithm
-
-## Languages Used
-
-I've explored various programming languages to solve the Advent of Code challenges, including:
-- Kotlin
-
-Feel free to explore the code and solutions provided!
+    - `Task(X).kt`: Solution and code for part 1 of the challenge.
+    - `Task(X+1).kt`: Solution and code for part 2 of the challenge.
+    - `task_input.txt`: Input provided for the challenge.
+    - `task_input_test.txt`: Short testing input provided for the challenge.
+- `Main.kt`: Main class containing execution code for the tasks and benchmark for measuring the speed of the algorithm
