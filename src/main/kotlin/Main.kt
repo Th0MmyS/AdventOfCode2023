@@ -1,4 +1,4 @@
-import tasks.day03.Task06
+import tasks.day04.Task08
 import java.io.File
 
 fun Array<String>.main() {
@@ -7,12 +7,12 @@ fun Array<String>.main() {
 }
 
 private fun doTask(): Float {
-    val fileNameTask = "src/main/kotlin/tasks/day03/task_input.txt"
+    val fileNameTask = "src/main/kotlin/tasks/day04/task_input.txt"
     val inputData = File(fileNameTask)
         .readLines()
         .map { it }
 
-    val task = Task06(inputData)
+    val task = Task08(inputData)
     return task.executeTask()
 }
 
@@ -20,7 +20,7 @@ fun Any.log() {
     println(this.toString())
 }
 
-inline fun runBenchmark(repeatCount: Int = 50, task: () -> Float) {
+inline fun runBenchmark(repeatCount: Int = 10, task: () -> Float) {
     val times = mutableListOf<Float>()
     repeat(repeatCount) {
         times.add(task())

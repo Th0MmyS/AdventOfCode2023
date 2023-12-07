@@ -6,7 +6,14 @@ abstract class AbstractTask<T, R> : ICalculation<R> {
         val startTimeInMillis = System.nanoTime()
         val result = calculate()
         val time = (System.nanoTime() - startTimeInMillis) / 1_000_000f
-        println("Task took $time ms to finish")
+        println(
+            buildString {
+                append("Task took $time ms to finish ")
+                if (time > WTF_LIMIT) {
+                    append("\n----- WTF??? Optimize it!!! -----")
+                }
+            }
+        )
         return Pair(result, time)
     }
 
@@ -16,5 +23,9 @@ abstract class AbstractTask<T, R> : ICalculation<R> {
         println("Calculated result is ${result.first}")
         println("-----")
         return result.second
+    }
+
+    private companion object {
+        const val WTF_LIMIT = 5000L
     }
 }
