@@ -4,9 +4,9 @@ import AbstractTask
 
 class Task09 constructor(
     override var inputData: List<String>
-) : AbstractTask<List<String>, Long>() {
+) : AbstractTask<List<String>, UInt>() {
 
-    override fun calculate(): Long {
+    override fun calculate(): UInt {
         var rawSeeds = ""
         val rawMappings = mutableListOf<MutableList<String>>()
         var tempList = mutableListOf<String>()
@@ -58,9 +58,9 @@ class Task09 constructor(
 
     private fun processMap(map: MutableList<String>) = map.map {
         val split = it.split(" ")
-        val dest = split.first().toLong()
-        val range = split.last().toLong()
-        val source = split[1].toLong()
+        val dest = split.first().toUInt()
+        val range = split.last().toUInt()
+        val source = split[1].toUInt()
         Mapping(source, dest, range)
     }
 
@@ -68,12 +68,12 @@ class Task09 constructor(
         .last()
         .split(" ")
         .mapNotNull {
-            it.replace(" ", "").toLongOrNull()
+            it.replace(" ", "").toUIntOrNull()
         }
 }
 
 data class Mapping constructor(
-    val source: Long,
-    val destination: Long,
-    val range: Long,
+    val source: UInt,
+    val destination: UInt,
+    val range: UInt,
 )
