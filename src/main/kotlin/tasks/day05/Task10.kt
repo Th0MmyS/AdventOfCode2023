@@ -36,10 +36,11 @@ class Task10 constructor(
             }
         }
 
-        var lowestNumber = UInt.MAX_VALUE
+        val lowestNumber: UInt
 
         val seeds = processSeeds(rawSeeds)
         val mappings = processMappings(rawMappings)
+        var calculatedLocation: UInt
 
         var source: UInt
         var count: UInt
@@ -72,17 +73,57 @@ class Task10 constructor(
             }
         }
 
+        mappings.forEach {
+            println(it)
+        }
+
+        var x: String
+        lowestNumber = generateSequence(0u, UInt::inc).first { location ->
+            calculatedLocation = location
+            x = calculatedLocation.toString()
+
+//            println("processing $calculatedLocation")
+
+            mappings.forEach { mapping ->
+                mapping.firstOrNull { calculatedLocation in it.destination..<(it.destination + it.range) }
+                    ?.let {
+//                        println("mapping $it")
+//                        println("before $calculatedLocation")
+                        calculatedLocation = calculatedLocation - it.destination + it.source
+                        x += ", $calculatedLocation"
+//                        println("after $calculatedLocation")
+                    } ?: run {
+//                    println("not found, still $calculatedLocation")
+                }
+            }
+
+
+//            println("calculated $calculatedLocation")
+
+            // 44187305
+            // 40398635
+
+//            println("final calculated location is $calculatedLocation")
+
+            seeds.any { calculatedLocation in it }.apply {
+                if (this) println("final $x")
+            }
+        }
+
+        // 50_855_035
         return lowestNumber
     }
 
-    private fun processMappings(rawMappings: MutableList<MutableList<String>>): Sequence<List<Mapping>> {
+    private fun processMappings(
+        rawMappings: MutableList<MutableList<String>>
+    ): Sequence<List<Mapping>> {
         val mappings = mutableListOf<List<Mapping>>()
 
         rawMappings.forEach {
             mappings.add(processMap(it))
         }
 
-        return mappings.asSequence()
+        return mappings.reversed().asSequence()
     }
 
     private fun processMap(map: MutableList<String>) = map.map {
@@ -93,10 +134,15 @@ class Task10 constructor(
         Mapping(source, dest, range)
     }
 
+//    60 56 37
+//    56 93 4
+//    93 -> 56
+//    94 -> 57
+
     private fun processSeeds(rawSeeds: String) = rawSeeds.split(":")
         .last()
         .split(" ")
-        .mapNotNull {
-            it.replace(" ", "").toUIntOrNull()
-        }.chunked(2)
+        .mapNotNull { it.replace(" ", "").toUIntOrNull() }
+        .chunked(2)
+        .map { UIntRange(it.first(), it.first() + it.last()) }
 }

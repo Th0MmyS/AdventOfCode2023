@@ -8,7 +8,7 @@ fun Array<String>.main() {
 }
 
 private fun doTask(): Float {
-    val fileNameTask = "src/main/kotlin/tasks/day05/task_input.txt"
+    val fileNameTask = "src/main/kotlin/tasks/day05/${TaskVariant.FULL.file}"
     val inputData = File(fileNameTask)
         .readLines()
         .map { it }
@@ -31,4 +31,11 @@ inline fun runBenchmark(repeatCount: Int = 10, task: () -> Float) {
     println("----------------")
     println("Result of the benchmark is:")
     println("Task was completed $repeatCount times and in average it took ${times.average()} ms")
+}
+
+enum class TaskVariant constructor(
+    val file: String
+) {
+    SAMPLE("task_input_test.txt"),
+    FULL("task_input.txt")
 }
