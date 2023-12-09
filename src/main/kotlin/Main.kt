@@ -1,4 +1,5 @@
 import tasks.day06.Task11
+import tasks.day06.Task12
 import java.io.File
 
 fun Array<String>.main() {

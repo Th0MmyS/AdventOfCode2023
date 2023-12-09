@@ -17,14 +17,10 @@ class Task11 constructor(
             .drop(1)
             .map { a -> a.toInt() }
 
-        return List(times.size) { index: Int ->
-            var win = 0
-            repeat(times[index]) { waitTime ->
-                if (waitTime * (times[index] - waitTime) > distances[index]) {
-                    win++
-                }
+        return List(times.size) { index ->
+            IntRange(0, times[index]).count { waitTime ->
+                waitTime * (times[index] - waitTime) > distances[index]
             }
-            win
         }.reduce { a, b -> a * b }
     }
 }
