@@ -1,4 +1,4 @@
-import tasks.day07.Task13
+import tasks.day07.Task14
 import java.io.File
 
 fun Array<String>.main() {
@@ -12,7 +12,7 @@ private fun doTask(): Float {
         .readLines()
         .map { it }
 
-    val task = Task13(inputData)
+    val task = Task14(inputData)
     return task.executeTask()
 }
 
