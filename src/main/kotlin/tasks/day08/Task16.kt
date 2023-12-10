@@ -1,8 +1,8 @@
-package tasks._day00
+package tasks.day08
 
 import AbstractTask
 
-class Task002 constructor(
+class Task16 constructor(
     override var inputData: List<String>
 ) : AbstractTask<List<String>, Int>() {
 

@@ -2,7 +2,7 @@ package tasks._day00
 
 import AbstractTask
 
-class Task001 constructor(
+class Task constructor(
     override var inputData: List<String>
 ) : AbstractTask<List<String>, Int>() {
 
