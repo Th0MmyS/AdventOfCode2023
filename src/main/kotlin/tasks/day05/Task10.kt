@@ -1,8 +1,15 @@
 package tasks.day05
 
 import AbstractTask
+import kotlinx.coroutines.*
 import log
 
+/**
+ * Bruteforce method, optimized by running each seed range in separate coroutine.
+ * Still takes more than a minute.
+ * Better solution would be to work with the ranges only and not with concrete seeds.
+ * Too lazy to refactor, maybe later
+ */
 class Task10 constructor(
     override var inputData: List<String>
 ) : AbstractTask<List<String>, UInt>() {
@@ -36,26 +43,33 @@ class Task10 constructor(
 
         var source: UInt
         var count: UInt
-        var m: MutableList<UInt>?
-        var calculatedSeed: UInt
 
-        seeds.asSequence().forEach {
-            source = it.first()
-            count = it.last()
-            UIntRange(source, source + count).asSequence().forEach { seed ->
-                calculatedSeed = seed
-                mappings.forEach { mapping ->
-                    mapping.firstOrNull { m -> calculatedSeed in m.source..m.source + m.range }
-                        ?.let { m ->
-                            calculatedSeed = calculatedSeed - m.source + m.destination
+        runBlocking {
+            launch(Dispatchers.Default) {
+                seeds.map {
+                    async {
+                        var calculatedSeed: UInt
+
+                        source = it.first()
+                        count = it.last()
+
+                        UIntRange(source, source + count).asSequence().forEach { seed ->
+                            calculatedSeed = seed
+                            mappings.forEach { mapping ->
+                                mapping.firstOrNull { m -> calculatedSeed in m.source..m.source + m.range }
+                                    ?.let { m ->
+                                        calculatedSeed = calculatedSeed - m.source + m.destination
+                                    }
+                            }
+
+                            if (calculatedSeed < lowestNumber) {
+                                lowestNumber = calculatedSeed
+                            }
                         }
-                }
-
-                if (calculatedSeed < lowestNumber) {
-                    lowestNumber = calculatedSeed
-                }
+                        lowestNumber.log()
+                    }
+                }.awaitAll()
             }
-            lowestNumber.log()
         }
 
         return lowestNumber
