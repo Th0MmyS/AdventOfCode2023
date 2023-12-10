@@ -36,7 +36,7 @@ class Task10 constructor(
             }
         }
 
-        val lowestNumber: UInt
+        var lowestNumber = UInt.MAX_VALUE
 
         val seeds = processSeeds(rawSeeds)
         val mappings = processMappings(rawMappings)
