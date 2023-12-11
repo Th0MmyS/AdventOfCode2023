@@ -11,7 +11,7 @@ class Task16 constructor(
             if (it == 'L') Direction.LEFT else Direction.RIGHT
         }
 
-        val points = inputData.drop(2).map {
+        val allPoints = inputData.drop(2).map {
             val split = it.split("=")
             val name = split.first().replace(" ", "")
             val d = split.last().split(",")
@@ -20,32 +20,57 @@ class Task16 constructor(
             Point(name, left, right)
         }.associateBy { it.name }
 
-        val currents = points.values
+        val startingPoints = allPoints.values
             .filter { it.name.endsWith('A') }
             .toTypedArray()
 
         var steps = 0L
         var direction: Direction
 
-        while (!currents.all { it.name.endsWith('Z') }) {
-            direction = directions[(steps % directions.size).toInt()]
+        val cycles = mutableListOf<Long>()
 
-            currents.forEachIndexed { index, point ->
-                currents[index] = when (direction) {
-                    Direction.LEFT -> points[point.left] ?: return -1
-                    Direction.RIGHT -> points[point.right] ?: return -1
+        startingPoints.forEach {
+            var currentPoint = it
+            var firstStep = 0L
+            while (true) {
+                direction = directions[(steps % directions.size).toInt()]
+
+                currentPoint = when (direction) {
+                    Direction.LEFT -> allPoints[currentPoint.left] ?: return -1
+                    Direction.RIGHT -> allPoints[currentPoint.right] ?: return -1
                 }
-            }
 
-            steps++
-            if (steps % 10_000_000L == 0L) {
-                println(steps)
-                println("---")
+                steps++
+
+                if (currentPoint.name.endsWith('Z')) {
+                    if (firstStep == 0L) {
+                        // save first appearance of Z
+                        firstStep = steps
+                    } else {
+                        // second appearance of Z, save the difference (cycle size)
+                        cycles.add(steps - firstStep)
+                        break
+                    }
+                }
             }
         }
 
-        // more than 12_840_000_000
+        return lcm(cycles)
+    }
 
-        return steps
+    private fun lcm(numbers: List<Long>) =
+        numbers.fold(1L) { a, b -> a * (b / gcf(a, b)) }
+
+    private fun gcf(number1: Long, number2: Long): Long {
+        var a = number1
+        var b = number2
+
+        while (b != 0L) {
+            val temp = b
+            b = a % b
+            a = temp
+        }
+
+        return a
     }
 }
