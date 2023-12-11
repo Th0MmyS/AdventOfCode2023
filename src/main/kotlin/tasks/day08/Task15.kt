@@ -27,18 +27,18 @@ class Task15 constructor(
 
         var current = points[START]
 
-        var step = 0
+        var steps = 0
         var direction: Direction
         while (current?.name != END) {
-            direction = directions[step % directions.size]
+            direction = directions[steps % directions.size]
             current = when (direction) {
                 LEFT -> points[current?.left]
                 RIGHT -> points[current?.right]
             }
 
-            step++
+            steps++
         }
-        return step
+        return steps
     }
 }
 
