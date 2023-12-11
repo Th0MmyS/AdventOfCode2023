@@ -12,42 +12,9 @@ class Task17 constructor(
             Pyramid(mutableListOf(Level(numbers)))
         }
 
-        pyramids.forEach { it.generateLevels() }
-        val numbers = pyramids.map { it.calculateNextNumberInFirstLevel() }
-
-        return numbers.sum()
-    }
-}
-
-data class Pyramid constructor(
-    val levels: MutableList<Level>
-) {
-    fun calculateNextNumberInFirstLevel(): Long {
-        var result = levels.last().bricks.last()
-        levels.reversed().drop(1).forEach {
-            val n = it.bricks.last()
-            result += n
-        }
-        return result
-    }
-
-    fun generateLevels() {
-        while (!levels.last().containsAllZeroes()) {
-            val newLevel = mutableListOf<Long>()
-            val lastLayerBricks = levels.last().bricks
-            lastLayerBricks.forEachIndexed { index, brick ->
-                if (index + 1 < lastLayerBricks.size) {
-                    newLevel.add(lastLayerBricks[index + 1] - brick)
-                }
-            }
-
-            levels.add(Level(newLevel))
+        return pyramids.sumOf {
+            it.generateLevels()
+            it.calculateNextNumberInFirstLevel()
         }
     }
-}
-
-data class Level constructor(
-    val bricks: List<Long>
-) {
-    fun containsAllZeroes() = bricks.all { it == 0L }
 }
