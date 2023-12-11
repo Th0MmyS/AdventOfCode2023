@@ -1,4 +1,4 @@
-import tasks.day07.Task14
+import tasks.day08.Task16
 import java.io.File
 
 fun Array<String>.main() {
@@ -7,12 +7,12 @@ fun Array<String>.main() {
 }
 
 private fun doTask(): Float {
-    val fileNameTask = "src/main/kotlin/tasks/day07/${TaskVariant.FULL.file}"
+    val fileNameTask = "src/main/kotlin/tasks/day08/${TaskVariant.FULL.file}"
     val inputData = File(fileNameTask)
         .readLines()
         .map { it }
 
-    val task = Task14(inputData)
+    val task = Task16(inputData)
     return task.executeTask()
 }
 
